@@ -1,0 +1,120 @@
+// DOM Content Loaded Event
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Change text content dynamically
+    updateFarmMetrics();
+    
+    // 2. Modify CSS styles via JavaScript
+    styleMarketPrices();
+    
+    // 3. Button event listeners for user interactions
+    setupButtonInteractions();
+});
+
+// Function to update farm metrics (dynamic text content)
+function updateFarmMetrics() {
+    // Simulate fetching data from IoT sensors
+    setTimeout(() => {
+        document.querySelector('#soil-moisture .value').textContent = '68% (Optimal)';
+        document.querySelector('#crop-yield .value').textContent = '22';
+        
+        // Update welcome message with current time
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        document.getElementById('welcome-message').textContent = 
+            `Hello Lilian! Farm dashboard updated on ${now.toLocaleDateString('en-KE', options)}`;
+    }, 1500);
+}
+
+// Function to modify CSS styles
+function styleMarketPrices() {
+    const prices = document.querySelectorAll('.market-price');
+    
+    prices.forEach(price => {
+        // Add visual importance to prices
+        price.style.fontWeight = 'bold';
+        price.style.fontSize = '1.1em';
+        
+        // Color based on value
+        const priceValue = parseInt(price.textContent.replace(/[^\d]/g, ''));
+        if (priceValue > 100) {
+            price.style.color = '#d9534f'; // Red for high prices
+        } else if (priceValue < 50) {
+            price.style.color = '#5cb85c'; // Green for low prices
+        }
+    });
+}
+
+// Function to handle button interactions
+function setupButtonInteractions() {
+    // Refresh market prices button
+    document.getElementById('refresh-prices').addEventListener('click', function() {
+        const prices = [
+            `Maize: KSh ${Math.floor(40 + Math.random() * 30)}/kg`,
+            `Beans: KSh ${Math.floor(100 + Math.random() * 50)}/kg`,
+            `Tomatoes: KSh ${Math.floor(60 + Math.random() * 50)}/kg`
+        ];
+        
+        const priceItems = document.querySelectorAll('#price-list li');
+        priceItems.forEach((item, index) => {
+            item.innerHTML = item.textContent.split(':')[0] + ': <span class="market-price">' + prices[index] + '</span>';
+        });
+        
+        // Reapply styles after update
+        styleMarketPrices();
+        
+        // Show notification
+        showTemporaryAlert('Market prices updated successfully!', 'success');
+    });
+    
+    // Toggle weather alert button
+    let alertExists = false;
+    document.getElementById('toggle-alert').addEventListener('click', function() {
+        const alertSection = document.getElementById('weather-alert');
+        
+        if (!alertExists) {
+            // Create new alert element
+            const newAlert = document.createElement('div');
+            newAlert.className = 'alert';
+            newAlert.innerHTML = `
+                <strong>Heavy Rainfall Alert!</strong>
+                <p>Kakamega County expecting 50mm rainfall tomorrow. Harvest your crops today.</p>
+            `;
+            
+            // Remove existing content and add new alert
+            alertSection.innerHTML = '';
+            alertSection.appendChild(newAlert);
+            
+            // Update button text
+            this.textContent = 'Remove Alert';
+            alertExists = true;
+        } else {
+            // Remove alert
+            alertSection.innerHTML = '<p>No current alerts for Kakamega County</p>';
+            
+            // Update button text
+            this.textContent = 'Add Rainfall Alert';
+            alertExists = false;
+        }
+    });
+}
+
+// Helper function to show temporary alerts
+function showTemporaryAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+    
+    document.body.prepend(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.style.opacity = '0';
+        setTimeout(() => alertDiv.remove(), 500);
+    }, 3000);
+}
