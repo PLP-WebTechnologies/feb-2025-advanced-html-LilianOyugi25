@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgTech Farm Hub - Western Kenya</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Initial styles that JavaScript will modify */
+        .market-price {
+            color: #2e8b57;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="hub-title">Welcome to AgTech Farm Hub, Western Kenya</h1>
+        <p id="welcome-message">Hello Lilian! Managing your farm operations since 2023</p>
+    </header>
+
+    <main>
+        <section class="dashboard-section">
+            <h2>Today's Farm Metrics</h2>
+            <div class="metric" id="soil-moisture">
+                <h3>Soil Moisture Level</h3>
+                <p class="value">Loading...</p>
+            </div>
+            
+            <div class="metric" id="crop-yield">
+                <h3>Expected Maize Yield (bags/acre)</h3>
+                <p class="value">Loading...</p>
+            </div>
+        </section>
+
+        <section class="market-section">
+            <h2>Kisumu Market Prices</h2>
+            <ul id="price-list">
+                <li>Maize: <span class="market-price">KSh 50/kg</span></li>
+                <li>Beans: <span class="market-price">KSh 120/kg</span></li>
+                <li>Tomatoes: <span class="market-price">KSh 80/kg</span></li>
+            </ul>
+            <button id="refresh-prices" class="btn">Refresh Market Prices</button>
+        </section>
+
+        <section id="weather-alert-section">
+            <h2>Weather Alerts</h2>
+            <div id="weather-alert">
+                <p>No current alerts for Kakamega County</p>
+            </div>
+            <button id="toggle-alert" class="btn">Add Rainfall Alert</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Contact: <a href="mailto:oyugililian@gmail.com">oyugililian@gmail.com</a></p>
+        <p>Serving farmers in Kakamega, Kisumu, and Bungoma counties</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
